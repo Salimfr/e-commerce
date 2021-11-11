@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 20, 2020 at 07:22 AM
+-- Generation Time: Feb 27, 2020 at 07:50 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.0.25
 
@@ -59,7 +59,7 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`id`, `categories`, `status`) VALUES
 (2, 'Cat4', 1),
-(3, 'Cat1', 1),
+(3, 'Cat1', 0),
 (5, 'Cat6', 1),
 (7, 'Cat9', 1);
 
@@ -86,6 +86,90 @@ INSERT INTO `contact_us` (`id`, `name`, `email`, `mobile`, `comment`, `added_on`
 (1, 'Vishal', 'vishal@gmail.com', '1234567890', 'Test Query', '2020-01-14 00:00:00'),
 (2, 'vishal@gmail.com', '', '1234567890', 'testing', '2020-01-19 07:59:38'),
 (3, 'Vishal', 'vishal@gmail.com', '1234567890', 'testing', '2020-01-19 08:00:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order`
+--
+
+CREATE TABLE `order` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `address` varchar(250) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `pincode` int(11) NOT NULL,
+  `payment_type` varchar(20) NOT NULL,
+  `total_price` float NOT NULL,
+  `payment_status` varchar(20) NOT NULL,
+  `order_status` int(11) NOT NULL,
+  `txnid` varchar(20) NOT NULL,
+  `mihpayid` varchar(20) NOT NULL,
+  `payu_status` varchar(10) NOT NULL,
+  `added_on` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`id`, `user_id`, `address`, `city`, `pincode`, `payment_type`, `total_price`, `payment_status`, `order_status`, `txnid`, `mihpayid`, `payu_status`, `added_on`) VALUES
+(1, 2, 'My Address', 'Bareilly/UP', 110001, 'COD', 102, 'pending', 5, '', '', '', '2020-02-15 09:34:03'),
+(2, 2, 'My Address', 'Bareilly/UP', 110001, 'COD', 102, 'pending', 3, '', '', '', '2020-02-15 09:35:04'),
+(3, 2, 'Delhi', 'Delhi', 110076, 'payu', 396, 'pending', 1, '', '', '', '2020-02-26 07:55:09'),
+(4, 2, 'Delhi', 'Delhi', 110076, 'payu', 882, 'pending', 1, 'cf8359e953961214d4fb', '', '', '2020-02-26 07:57:34'),
+(5, 2, 'Delhi', 'Delhi', 110076, 'payu', 98, 'success', 1, '91a790fe5652ed21fa43', '403993715520641834', '', '2020-02-26 08:03:02'),
+(6, 2, 'delhi', 'delhi', 110076, 'payu', 12, 'success', 1, 'c91f6e83dae6bb4e4143', '403993715520641836', '', '2020-02-26 08:06:48');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_detail`
+--
+
+CREATE TABLE `order_detail` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `price` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_detail`
+--
+
+INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `qty`, `price`) VALUES
+(1, 1, 4, 1, 99),
+(2, 1, 1, 1, 3),
+(3, 2, 4, 1, 99),
+(4, 2, 1, 1, 3),
+(5, 3, 4, 4, 99),
+(6, 4, 5, 9, 98),
+(7, 5, 5, 1, 98),
+(8, 6, 1, 4, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_status`
+--
+
+CREATE TABLE `order_status` (
+  `id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `order_status`
+--
+
+INSERT INTO `order_status` (`id`, `name`) VALUES
+(1, 'Pending'),
+(2, 'Processing'),
+(3, 'Shipped'),
+(4, 'Canceled'),
+(5, 'Complete');
 
 -- --------------------------------------------------------
 
@@ -138,7 +222,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `password`, `email`, `mobile`, `added_on`) VALUES
-(1, 'Vishal Gupta', '', 'vishal@gmail.com', '1234567890', '2020-01-14 00:00:00');
+(1, 'Vishal Gupta', '', 'vishal@gmail.com', '1234567890', '2020-01-14 00:00:00'),
+(2, 'Vishal', 'vishal', 'phpvishal@gmail.com', '12345678980', '2020-01-22 08:33:08'),
+(3, 'Vishal', 'vishal', 'phpvishal1@gmail.com', '1234567890', '2020-01-22 08:34:18');
 
 --
 -- Indexes for dumped tables
@@ -160,6 +246,24 @@ ALTER TABLE `categories`
 -- Indexes for table `contact_us`
 --
 ALTER TABLE `contact_us`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order`
+--
+ALTER TABLE `order`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_status`
+--
+ALTER TABLE `order_status`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -197,6 +301,24 @@ ALTER TABLE `contact_us`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `order`
+--
+ALTER TABLE `order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `order_status`
+--
+ALTER TABLE `order_status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
@@ -206,7 +328,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
