@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2020 at 06:33 AM
+-- Generation Time: May 26, 2020 at 07:25 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.0.25
 
@@ -103,8 +103,14 @@ CREATE TABLE `order` (
   `total_price` float NOT NULL,
   `payment_status` varchar(20) NOT NULL,
   `order_status` int(11) NOT NULL,
+  `length` float NOT NULL,
+  `breadth` float NOT NULL,
+  `height` float NOT NULL,
+  `weight` float NOT NULL,
   `txnid` varchar(20) NOT NULL,
   `mihpayid` varchar(20) NOT NULL,
+  `ship_order_id` int(11) NOT NULL,
+  `ship_shipment_id` int(11) NOT NULL,
   `payu_status` varchar(10) NOT NULL,
   `added_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -113,16 +119,18 @@ CREATE TABLE `order` (
 -- Dumping data for table `order`
 --
 
-INSERT INTO `order` (`id`, `user_id`, `address`, `city`, `pincode`, `payment_type`, `total_price`, `payment_status`, `order_status`, `txnid`, `mihpayid`, `payu_status`, `added_on`) VALUES
-(1, 1, 'test', 'test', 110076, 'COD', 164299, 'Success', 3, 'eaad21770607ee0b25ba', '', '', '2020-05-15 10:29:38'),
-(3, 1, 'Delhi', 'Delhi', 110076, 'COD', 10, 'pending', 2, '8834142e7821c1889b33', '', '', '2020-05-20 07:44:24'),
-(4, 1, 'delhi', 'delhi', 110076, 'COD', 12000, 'pending', 2, '1bf668ba03dc15833001', '', '', '2020-05-20 07:56:44'),
-(5, 1, 'Delhi', 'Delhi', 110076, 'payu', 16998, 'pending', 3, '8b1b93a4b63e0b2307a0', '', '', '2020-05-20 08:10:37'),
-(6, 1, 'Dlhi', 'Dlhi', 110076, 'payu', 16998, 'success', 1, 'da1f0fd6ae533d8a2f70', '403993715521005867', '', '2020-05-20 08:22:27'),
-(7, 3, 'Patna', 'Patna', 110076, 'COD', 1560, 'pending', 3, '36f4e1a258f5649996b5', '', '', '2020-05-22 11:24:46'),
-(8, 3, 'aa', 'aa', 0, 'COD', 1900, 'pending', 3, '54a9bf67d824479004a4', '', '', '2020-05-22 11:27:17'),
-(9, 1, 'Delhi', 'Delhi', 110076, 'COD', 1900, 'pending', 1, '62d6625c440ecc84aa78', '', '', '2020-05-22 09:58:57'),
-(10, 1, 'Sarita Vihar', 'Delhi', 110076, 'COD', 150, 'pending', 3, '3532b3a4441fa64e2918', '', '', '2020-05-23 10:45:15');
+INSERT INTO `order` (`id`, `user_id`, `address`, `city`, `pincode`, `payment_type`, `total_price`, `payment_status`, `order_status`, `length`, `breadth`, `height`, `weight`, `txnid`, `mihpayid`, `ship_order_id`, `ship_shipment_id`, `payu_status`, `added_on`) VALUES
+(1, 1, 'test', 'test', 110076, 'COD', 164299, 'Success', 3, 0, 0, 0, 0, 'eaad21770607ee0b25ba', '', 0, 0, '', '2020-05-15 10:29:38'),
+(3, 1, 'Delhi', 'Delhi', 110076, 'COD', 10, 'pending', 2, 0, 0, 0, 0, '8834142e7821c1889b33', '', 0, 0, '', '2020-05-20 07:44:24'),
+(4, 1, 'delhi', 'delhi', 110076, 'COD', 12000, 'pending', 2, 0, 0, 0, 0, '1bf668ba03dc15833001', '', 0, 0, '', '2020-05-20 07:56:44'),
+(5, 1, 'Delhi', 'Delhi', 110076, 'payu', 16998, 'pending', 3, 0, 0, 0, 0, '8b1b93a4b63e0b2307a0', '', 0, 0, '', '2020-05-20 08:10:37'),
+(6, 1, 'Dlhi', 'Dlhi', 110076, 'payu', 16998, 'success', 1, 0, 0, 0, 0, 'da1f0fd6ae533d8a2f70', '403993715521005867', 0, 0, '', '2020-05-20 08:22:27'),
+(7, 3, 'Patna', 'Patna', 110076, 'COD', 1560, 'pending', 3, 0, 0, 0, 0, '36f4e1a258f5649996b5', '', 0, 0, '', '2020-05-22 11:24:46'),
+(8, 3, 'aa', 'aa', 0, 'COD', 1900, 'pending', 3, 0, 0, 0, 0, '54a9bf67d824479004a4', '', 0, 0, '', '2020-05-22 11:27:17'),
+(9, 1, 'Delhi', 'Delhi', 110076, 'COD', 1900, 'pending', 4, 0, 0, 0, 0, '62d6625c440ecc84aa78', '', 0, 0, '', '2020-05-22 09:58:57'),
+(10, 1, 'Sarita Vihar', 'Delhi', 110076, 'COD', 150, 'pending', 3, 0, 0, 0, 0, '3532b3a4441fa64e2918', '', 0, 0, '', '2020-05-23 10:45:15'),
+(11, 1, 'Sarita Vihar', 'Delhi', 110076, 'COD', 50, 'pending', 3, 20, 20, 20, 2.5, '1fbc5a06bfa6e2299f79', '', 0, 0, '', '2020-05-25 06:49:19'),
+(16, 1, 'Sarita Vihar', 'delhi', 110076, 'COD', 1560, 'pending', 4, 20, 20, 20, 2.5, 'af5421697c0e596ca7f9', '', 38845635, 38565829, '', '2020-05-25 06:49:42');
 
 -- --------------------------------------------------------
 
@@ -152,7 +160,9 @@ INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `qty`, `price`) VALU
 (8, 7, 9, 1, 1560),
 (9, 8, 8, 1, 1900),
 (10, 9, 8, 1, 1900),
-(11, 10, 11, 3, 50);
+(11, 10, 11, 3, 50),
+(12, 11, 11, 1, 50),
+(13, 16, 9, 1, 1560);
 
 -- --------------------------------------------------------
 
@@ -234,7 +244,7 @@ CREATE TABLE `shiprocket_token` (
 --
 
 INSERT INTO `shiprocket_token` (`id`, `token`, `added_on`) VALUES
-(1, 'asdas', '2020-05-17 20:00:47');
+(1, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQ5NDkwOSwiaXNzIjoiaHR0cHM6Ly9hcGl2Mi5zaGlwcm9ja2V0LmluL3YxL2V4dGVybmFsL2F1dGgvbG9naW4iLCJpYXQiOjE1OTA0MDQ4NTMsImV4cCI6MTU5MTI2ODg1MywibmJmIjoxNTkwNDA0ODUzLCJqdGkiOiJWZU4zaE5YMm1LdVY4cXB0In0.YKracv-yDKppYb2FISr5zE_4gEGWIAz-HzIa6cit9nw', '2020-05-25 05:07:26');
 
 -- --------------------------------------------------------
 
@@ -399,13 +409,13 @@ ALTER TABLE `contact_us`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `order_status`
