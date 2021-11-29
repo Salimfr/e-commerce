@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2020 at 07:25 AM
+-- Generation Time: May 27, 2020 at 01:44 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.0.25
 
@@ -90,6 +90,29 @@ INSERT INTO `contact_us` (`id`, `name`, `email`, `mobile`, `comment`, `added_on`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `coupon_master`
+--
+
+CREATE TABLE `coupon_master` (
+  `id` int(11) NOT NULL,
+  `coupon_code` varchar(50) NOT NULL,
+  `coupon_value` int(11) NOT NULL,
+  `coupon_type` varchar(10) NOT NULL,
+  `cart_min_value` int(11) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `coupon_master`
+--
+
+INSERT INTO `coupon_master` (`id`, `coupon_code`, `coupon_value`, `coupon_type`, `cart_min_value`, `status`) VALUES
+(1, 'First50', 1000, 'Rupee', 1500, 1),
+(2, 'First60', 20, 'Percentage', 1000, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `order`
 --
 
@@ -112,6 +135,9 @@ CREATE TABLE `order` (
   `ship_order_id` int(11) NOT NULL,
   `ship_shipment_id` int(11) NOT NULL,
   `payu_status` varchar(10) NOT NULL,
+  `coupon_id` int(11) NOT NULL,
+  `coupon_value` varchar(50) NOT NULL,
+  `coupon_code` varchar(50) NOT NULL,
   `added_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -119,18 +145,20 @@ CREATE TABLE `order` (
 -- Dumping data for table `order`
 --
 
-INSERT INTO `order` (`id`, `user_id`, `address`, `city`, `pincode`, `payment_type`, `total_price`, `payment_status`, `order_status`, `length`, `breadth`, `height`, `weight`, `txnid`, `mihpayid`, `ship_order_id`, `ship_shipment_id`, `payu_status`, `added_on`) VALUES
-(1, 1, 'test', 'test', 110076, 'COD', 164299, 'Success', 3, 0, 0, 0, 0, 'eaad21770607ee0b25ba', '', 0, 0, '', '2020-05-15 10:29:38'),
-(3, 1, 'Delhi', 'Delhi', 110076, 'COD', 10, 'pending', 2, 0, 0, 0, 0, '8834142e7821c1889b33', '', 0, 0, '', '2020-05-20 07:44:24'),
-(4, 1, 'delhi', 'delhi', 110076, 'COD', 12000, 'pending', 2, 0, 0, 0, 0, '1bf668ba03dc15833001', '', 0, 0, '', '2020-05-20 07:56:44'),
-(5, 1, 'Delhi', 'Delhi', 110076, 'payu', 16998, 'pending', 3, 0, 0, 0, 0, '8b1b93a4b63e0b2307a0', '', 0, 0, '', '2020-05-20 08:10:37'),
-(6, 1, 'Dlhi', 'Dlhi', 110076, 'payu', 16998, 'success', 1, 0, 0, 0, 0, 'da1f0fd6ae533d8a2f70', '403993715521005867', 0, 0, '', '2020-05-20 08:22:27'),
-(7, 3, 'Patna', 'Patna', 110076, 'COD', 1560, 'pending', 3, 0, 0, 0, 0, '36f4e1a258f5649996b5', '', 0, 0, '', '2020-05-22 11:24:46'),
-(8, 3, 'aa', 'aa', 0, 'COD', 1900, 'pending', 3, 0, 0, 0, 0, '54a9bf67d824479004a4', '', 0, 0, '', '2020-05-22 11:27:17'),
-(9, 1, 'Delhi', 'Delhi', 110076, 'COD', 1900, 'pending', 4, 0, 0, 0, 0, '62d6625c440ecc84aa78', '', 0, 0, '', '2020-05-22 09:58:57'),
-(10, 1, 'Sarita Vihar', 'Delhi', 110076, 'COD', 150, 'pending', 3, 0, 0, 0, 0, '3532b3a4441fa64e2918', '', 0, 0, '', '2020-05-23 10:45:15'),
-(11, 1, 'Sarita Vihar', 'Delhi', 110076, 'COD', 50, 'pending', 3, 20, 20, 20, 2.5, '1fbc5a06bfa6e2299f79', '', 0, 0, '', '2020-05-25 06:49:19'),
-(16, 1, 'Sarita Vihar', 'delhi', 110076, 'COD', 1560, 'pending', 4, 20, 20, 20, 2.5, 'af5421697c0e596ca7f9', '', 38845635, 38565829, '', '2020-05-25 06:49:42');
+INSERT INTO `order` (`id`, `user_id`, `address`, `city`, `pincode`, `payment_type`, `total_price`, `payment_status`, `order_status`, `length`, `breadth`, `height`, `weight`, `txnid`, `mihpayid`, `ship_order_id`, `ship_shipment_id`, `payu_status`, `coupon_id`, `coupon_value`, `coupon_code`, `added_on`) VALUES
+(1, 1, 'test', 'test', 110076, 'COD', 164299, 'Success', 3, 0, 0, 0, 0, 'eaad21770607ee0b25ba', '', 0, 0, '', 0, '', '', '2020-05-15 10:29:38'),
+(3, 1, 'Delhi', 'Delhi', 110076, 'COD', 10, 'pending', 2, 0, 0, 0, 0, '8834142e7821c1889b33', '', 0, 0, '', 0, '', '', '2020-05-20 07:44:24'),
+(4, 1, 'delhi', 'delhi', 110076, 'COD', 12000, 'pending', 2, 0, 0, 0, 0, '1bf668ba03dc15833001', '', 0, 0, '', 0, '', '', '2020-05-20 07:56:44'),
+(5, 1, 'Delhi', 'Delhi', 110076, 'payu', 16998, 'pending', 3, 0, 0, 0, 0, '8b1b93a4b63e0b2307a0', '', 0, 0, '', 0, '', '', '2020-05-20 08:10:37'),
+(6, 1, 'Dlhi', 'Dlhi', 110076, 'payu', 16998, 'success', 1, 0, 0, 0, 0, 'da1f0fd6ae533d8a2f70', '403993715521005867', 0, 0, '', 0, '', '', '2020-05-20 08:22:27'),
+(7, 3, 'Patna', 'Patna', 110076, 'COD', 1560, 'pending', 3, 0, 0, 0, 0, '36f4e1a258f5649996b5', '', 0, 0, '', 0, '', '', '2020-05-22 11:24:46'),
+(8, 3, 'aa', 'aa', 0, 'COD', 1900, 'pending', 3, 0, 0, 0, 0, '54a9bf67d824479004a4', '', 0, 0, '', 0, '', '', '2020-05-22 11:27:17'),
+(9, 1, 'Delhi', 'Delhi', 110076, 'COD', 1900, 'pending', 4, 0, 0, 0, 0, '62d6625c440ecc84aa78', '', 0, 0, '', 0, '', '', '2020-05-22 09:58:57'),
+(10, 1, 'Sarita Vihar', 'Delhi', 110076, 'COD', 150, 'pending', 3, 0, 0, 0, 0, '3532b3a4441fa64e2918', '', 0, 0, '', 0, '', '', '2020-05-23 10:45:15'),
+(11, 1, 'Sarita Vihar', 'Delhi', 110076, 'COD', 50, 'pending', 3, 20, 20, 20, 2.5, '1fbc5a06bfa6e2299f79', '', 0, 0, '', 0, '', '', '2020-05-25 06:49:19'),
+(13, 1, 'delhi', 'Delhi', 110076, 'COD', 1560, 'pending', 1, 0, 0, 0, 0, '68d2cc3d52d8f21197fb', '', 0, 0, '', 1, '1000', 'First50', '2020-05-26 08:06:32'),
+(14, 1, 'Delhi', 'Delhi', 10076, 'COD', 560, 'pending', 1, 0, 0, 0, 0, '901aa3cb126d2448d5e9', '', 0, 0, '', 1, '1000', 'First50', '2020-05-26 08:07:48'),
+(16, 1, 'Sarita Vihar', 'delhi', 110076, 'COD', 1560, 'pending', 4, 20, 20, 20, 2.5, 'af5421697c0e596ca7f9', '', 38845635, 38565829, '', 0, '', '', '2020-05-25 06:49:42');
 
 -- --------------------------------------------------------
 
@@ -162,7 +190,9 @@ INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `qty`, `price`) VALU
 (10, 9, 8, 1, 1900),
 (11, 10, 11, 3, 50),
 (12, 11, 11, 1, 50),
-(13, 16, 9, 1, 1560);
+(13, 16, 9, 1, 1560),
+(14, 13, 9, 1, 1560),
+(15, 14, 9, 1, 1560);
 
 -- --------------------------------------------------------
 
@@ -288,7 +318,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `password`, `email`, `mobile`, `added_on`) VALUES
-(1, 'Vishal Gupta2', 'vishal', 'phpvisha1l@gmail.com', '1234567890', '2020-05-13 00:00:00'),
+(1, 'Vishal Gupta', 'vishal', 'phpvisha1l@gmail.com', '1234567890', '2020-05-13 00:00:00'),
 (2, 'Amit', 'amit', 'amir@gmail.com', '1234567890', '2020-05-14 00:00:00'),
 (3, 'Vishal', 'vishal', 'ytlearnwebdevelopment@gmail.com', '9540608104', '2020-05-16 01:24:15');
 
@@ -333,6 +363,12 @@ ALTER TABLE `categories`
 -- Indexes for table `contact_us`
 --
 ALTER TABLE `contact_us`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `coupon_master`
+--
+ALTER TABLE `coupon_master`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -406,16 +442,22 @@ ALTER TABLE `contact_us`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `coupon_master`
+--
+ALTER TABLE `coupon_master`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `order_status`
